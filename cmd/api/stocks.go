@@ -25,9 +25,9 @@ func (app *application) showStockHandler(w http.ResponseWriter, r *http.Request)
 		UpdatedAt: time.Now(),
 		ItemName:  "Beer",
 		SKU:       "BA123",
-		Category:  nil,
-		UnitPrice: 0,
-		Quantity:  0,
+		Category:  []string{"Liquor"},
+		UnitPrice: 100,
+		Quantity:  10,
 		Version:   1,
 	}
 
