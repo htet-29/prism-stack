@@ -3,6 +3,9 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
+
+	"github.com/htet-29/prism-stack/internal/data"
 )
 
 func (app *application) createStockHandler(w http.ResponseWriter, r *http.Request) {
@@ -16,5 +19,21 @@ func (app *application) showStockHandler(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	fmt.Fprintf(w, "showing the details of stock: %d\n", id)
+	stock := data.Stock{
+		ID:        id,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+		ItemName:  "Beer",
+		SKU:       "BA123",
+		Category:  []string{"Liquor"},
+		UnitPrice: 100,
+		Quantity:  10,
+		Version:   1,
+	}
+
+	err = app.writeJSON(w, http.StatusOK, stock, nil)
+	if err != nil {
+		app.logger.Error(err.Error())
+		http.Error(w, "The server encountered a problem and could not process your request", http.StatusInternalServerError)
+	}
 }
