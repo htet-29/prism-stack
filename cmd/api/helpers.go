@@ -22,6 +22,7 @@ func (app *application) readIDParam(r *http.Request) (int64, error) {
 
 type envelope map[string]any
 
+// writeJSON is the helper method that writes a json response to the client
 func (app *application) writeJSON(w http.ResponseWriter, status int, data envelope, headers http.Header) error {
 	js, err := json.MarshalIndent(data, "", "\t")
 	if err != nil {
