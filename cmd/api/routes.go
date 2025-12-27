@@ -16,5 +16,5 @@ func (app *application) routes() http.Handler {
 	router.HandlerFunc(http.MethodPost, "/v1/stocks", app.createStockHandler)
 	router.HandlerFunc(http.MethodGet, "/v1/stocks/:id", app.showStockHandler)
 
-	return router
+	return app.recoverPanic(router)
 }
