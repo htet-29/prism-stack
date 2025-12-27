@@ -9,7 +9,21 @@ import (
 )
 
 func (app *application) createStockHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "create a new stock")
+	var input struct {
+		ItemName  string   `json:"item_name"`
+		SKU       string   `json:"sku"`
+		Category  []string `json:"category"`
+		UnitPrice int64    `json:"unit_price"`
+		Quantity  int64    `json:"quantity"`
+	}
+
+	err := app.readJSON(w, r, &input)
+	if err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+
+	fmt.Fprintf(w, "%+v\n", input)
 }
 
 func (app *application) showStockHandler(w http.ResponseWriter, r *http.Request) {
