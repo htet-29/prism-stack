@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/htet-29/prism-stack/internal/data"
+	"github.com/htet-29/prism-stack/internal/validator"
 )
 
 func (app *application) createStockHandler(w http.ResponseWriter, r *http.Request) {
@@ -20,6 +21,21 @@ func (app *application) createStockHandler(w http.ResponseWriter, r *http.Reques
 	err := app.readJSON(w, r, &input)
 	if err != nil {
 		app.badRequestResponse(w, r, err)
+		return
+	}
+
+	stock := &data.Stock{
+		ItemName:  input.ItemName,
+		SKU:       input.SKU,
+		Category:  input.Category,
+		UnitPrice: input.UnitPrice,
+		Quantity:  input.Quantity,
+	}
+
+	v := validator.New()
+
+	if data.ValidateStock(v, stock); !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}
 
