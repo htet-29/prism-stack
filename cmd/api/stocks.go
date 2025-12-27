@@ -10,11 +10,11 @@ import (
 
 func (app *application) createStockHandler(w http.ResponseWriter, r *http.Request) {
 	var input struct {
-		ItemName  string   `json:"item_name"`
-		SKU       string   `json:"sku"`
-		Category  []string `json:"category"`
-		UnitPrice int64    `json:"unit_price"`
-		Quantity  int64    `json:"quantity"`
+		ItemName  string    `json:"item_name"`
+		SKU       string    `json:"sku"`
+		Category  []string  `json:"category"`
+		UnitPrice data.Unit `json:"unit_price"`
+		Quantity  int64     `json:"quantity"`
 	}
 
 	err := app.readJSON(w, r, &input)
